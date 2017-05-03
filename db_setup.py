@@ -10,7 +10,9 @@ try:
                  )"""
         cursor.execute(sql)
     connection.commit()
+    print('data base successfully created')
 except:
     connection.rollback()
+    print('some error occured')
 finally:
     connection.close()
