@@ -21,28 +21,36 @@
         function initialize() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(getPosition);
-            }
-            else {
-                console.log('Geolocation not supported by browser');
+            } else {
+                console.log('Geolocation is not supported by browser');
             }
         }
         function getPosition(position) {
-            showMap(position);
+            initializeMap(position);
         }
-        function showMap(Geoposition) {
-            var lat = Geoposition.coords.latitude;
-            var long = Geoposition.coords.longitude;
+        function initializeMap(Geolocation) {
+            var lat = Geolocation.coords.latitude;
+            var long = Geolocation.coords.longitude;
+            var loc = new google.maps.LatLng(lat,long);
             var mapOptions = {
-                center: new google.maps.LatLng(lat,long),
+                center: loc,
                 zoom: 15
             }
             var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(lat,long),
+            var cmarker = new google.maps.Marker({
+                position: loc,
                 animation: google.maps.Animation.DROP,
-                map: map,
-                icon: 'https://i.stack.imgur.com/VpVF8.png'
-            })
+                map: map
+            });
+            google.maps.event.addListener(map, 'click',function(event){
+                placeMarker(event.latLng);
+                });
+            function placeMarker(pos) {
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map
+            });
+        }
         }
         </script>
         <style>
