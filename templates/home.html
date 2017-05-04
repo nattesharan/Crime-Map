@@ -17,6 +17,34 @@
     <head>
         <title>CrimeMap</title>
         <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js'></script>
+        <script type="text/javascript">
+        function initialize() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getPosition);
+            }
+            else {
+                console.log('Geolocation not supported by browser');
+            }
+        }
+        function getPosition(position) {
+            showMap(position);
+        }
+        function showMap(Geoposition) {
+            var lat = Geoposition.coords.latitude;
+            var long = Geoposition.coords.longitude;
+            var mapOptions = {
+                center: new google.maps.LatLng(lat,long),
+                zoom: 15
+            }
+            var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat,long),
+                animation: google.maps.Animation.DROP,
+                map: map,
+                icon: 'https://i.stack.imgur.com/VpVF8.png'
+            })
+        }
+        </script>
         <style>
             #map {
                 width: 80%;
@@ -24,7 +52,7 @@
             }
         </style>
     </head>
-    <body>
-        <div id='map' style="width:80%;height:600px;"></div>
+    <body onload="initialize()">
+        <div id='map'></div>
     </body>
 </html>
