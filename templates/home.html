@@ -40,7 +40,8 @@
             var cmarker = new google.maps.Marker({
                 position: loc,
                 animation: google.maps.Animation.DROP,
-                map: map
+                map: map,
+                icon: 'https://i.stack.imgur.com/VpVF8.png'
             });
             google.maps.event.addListener(map, 'click',function(event){
                 placeMarker(event.latLng);
