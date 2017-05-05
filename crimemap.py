@@ -31,6 +31,8 @@ def clear():
 @app.route('/submitcrime',methods = ['POST'])
 def submitcrime():
     category = request.form['category']
+    if category not in categories:
+        return home()
     date = request.form['date']
     latitude = request.form['latitude']
     longitude = request.form['longitude']
