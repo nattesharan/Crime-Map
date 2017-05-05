@@ -3,6 +3,7 @@ from dbhelper import DBHelper
 import json
 app = Flask(__name__)
 DB = DBHelper()
+categories = ['mugging', 'break-in']
 @app.route('/')
 def home():
     try:
@@ -11,7 +12,7 @@ def home():
     except Exception as E:
         print(E)
         data = None
-    return render_template('home.html',data = data)
+    return render_template('home.html',data = data,categories = categories)
 @app.route('/add', methods = ['POST'])
 def add():
     try:
