@@ -51,3 +51,4 @@ class DBHelper:
             connection.commit()
         finally:
             connection.close()
+        print('Database successfully deleted')
