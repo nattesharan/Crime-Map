@@ -22,13 +22,15 @@
         var map;
         var marker;
         function setCrimes(crimes) {
-            for(var i = 0;i<crimes.length;i++){
+            if(crimes != null) {
+                for(var i = 0;i<crimes.length;i++){
                 pos = new google.maps.LatLng(crimes[i].latitude, crimes[i].longitude);
                 crime = new google.maps.Marker({
                     position: pos,
                     map: map,
                     title: crimes[i].date +'\n' + crimes[i].category + '\n' + crimes[i].description
-                })
+                });
+            }
             }
         }
         function initialize() {
@@ -56,10 +58,10 @@
                 map: map,
                 icon: 'https://i.stack.imgur.com/VpVF8.png'
             });
-            setCrimes({{ data | safe}});
             google.maps.event.addListener(map, 'click',function(event){
                 placeMarker(event.latLng);
                 });
+            setCrimes({{ data | safe}});
             function placeMarker(pos) {
                 if (marker) {
                     marker.setPosition(pos);
