@@ -1,16 +1,17 @@
 from flask import Flask,request,render_template,url_for,redirect
 from dbhelper import DBHelper
+import json
 app = Flask(__name__)
 DB = DBHelper()
 @app.route('/')
 def home():
     try:
         data = DB.get_all_crimes()
-        print(data)
+        data = json.dumps(data)
     except Exception as E:
         print(E)
         data = None
-    return render_template('home.html')
+    return render_template('home.html',data = data)
 @app.route('/add', methods = ['POST'])
 def add():
     try:
