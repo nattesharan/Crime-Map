@@ -1,6 +1,7 @@
 from flask import Flask,request,render_template,url_for,redirect
 from dbhelper import DBHelper
 import json
+import string
 app = Flask(__name__)
 DB = DBHelper()
 categories = ['mugging', 'break-in']
@@ -36,8 +37,11 @@ def submitcrime():
     date = request.form['date']
     latitude = request.form['latitude']
     longitude = request.form['longitude']
-    description = request.form['description']
+    description = santize_des(request.form['description'])
     DB.add_crime(category, date, latitude, longitude, description)
     return redirect(url_for('home'))
+def santize_des(des):
+    whitelist = string.letters + string.digits + "!?$.,;:-'()&"
+    return filter(lambda x: x in whitelist,des)
 if __name__ == '__main__':
     app.run(port=int('3000'),debug = True)
